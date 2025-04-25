@@ -3,12 +3,7 @@ GDL reproduces all the IDL switches (most of them being without object as GDL ha
 
 One can change the behaviour of GDL using the following switches:
   * **--fakerelease X.y** : pretend that `!VERSION.RELEASE` is X.y
-  * **--fussy** :           implies that procedures adhere with modern IDL, where "()" are for functions and "[]" are for arrays.
-                     This speeds up (sometimes terribly) compilation but choke on every use of "()" with arrays.
-                     Conversion of procedures to modern IDL can be done with D. Landsman's idlv4_to_v5 procedure.
-                     Use enviromnment variable "`GDL_IS_FUSSY`" to set up permanently this feature.
-  * **--sloppy** :          Sets the traditional (default) compiling option where "()"  can be used both with functions and arrays.
-                     Needed to counteract temporarily the effect of the enviromnment variable "`GDL_IS_FUSSY`".
+  * **--trace-old-syntax** : show places in procedures that do not adhere with modern IDL, where "()" are for functions and "[]" are for arrays.
   * **--MAC** :             Graphic device will be called '`MAC`' on MacOSX. (default: 'X')
   * **[--no-use-wx | -X]** : Tells GDL not to use WxWidgets graphics and resort to X11 (if available).
                      Also enabled by setting the environment variable `GDL_DISABLE_WX_PLOTS` to a non-null value.
