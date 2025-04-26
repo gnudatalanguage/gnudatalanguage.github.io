@@ -6,3 +6,4 @@ To go forward in the command stack, type ^s (but to do that, you must have put y
 
 You can program your line-editing keys at your convenience, see [the readline manual](https://tiswww.case.edu/php/chet/readline/rluserman.html) 
 
+See also the solution of the problem described in #2030, at the end of discussion.
