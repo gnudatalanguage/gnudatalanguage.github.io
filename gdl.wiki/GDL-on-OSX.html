@@ -51,6 +51,17 @@
 </section>
 <section id="installing-gdl-on-osx">
 <h1>INSTALLING GDL ON OSX<a class="headerlink" href="#installing-gdl-on-osx" title="Link to this heading">¶</a></h1>
+<section id="important-at-least-on-sequoia-applesilicon-chips-the-following-seems-necessary-before-any-attempt-of-installing-gdl">
+<h2>IMPORTANT! at least on Sequoia (+ AppleSilicon chips?) , the following seems necessary before any attempt of installing GDL:<a class="headerlink" href="#important-at-least-on-sequoia-applesilicon-chips-the-following-seems-necessary-before-any-attempt-of-installing-gdl" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>This worked for M2 Ultra, 15.6.1, Homebrew, Way 1. Before any of the build_gdl.sh commands
+( transmitted by <a class="reference external" href="https://github.com/Barney-9000">&#64;barney-9000</a> in <a class="reference external" href="https://github.com/gnudatalanguage/gdl/issues/2084">#2084</a>):
+<code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">SDKROOT=$(xcrun</span> <span class="pre">--show-sdk-path)</span></code></p></li>
+<li><p>This may also be necessary – removal and reinstall of CLT before the above export command:</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">/Library/Developer/CommandLineTools</span></code>
+<code class="docutils literal notranslate"><span class="pre">xcode-select</span> <span class="pre">--install</span></code></p>
+<p>Good luck!</p>
 <hr class="docutils" />
 <p><code class="docutils literal notranslate"><span class="pre">Way</span> <span class="pre">0</span></code></p>
 <p>GDL may be available, but check carefully the version, from:</p>
@@ -87,6 +98,7 @@
 </ul>
 <p>GDL is built with wxWidgets graphic interface, but the X11 graphic windows are still there and can be called by a switch in the gdl command, see output of <code class="docutils literal notranslate"><span class="pre">gdl</span> <span class="pre">-h</span></code>. Of course to use X11 you need to independently install XQuartz.</p>
 <p>This script is very frequently tested on OSX 10.14.6 and 11.3. Brew may have side effects (updates are frequent and quite long, may have conflict if machine with multi-users, projects asking for login/pass). Usually just reading the messages, using ‘brew doctor’ should be enough.</p>
+</section>
 <section id="git-issues">
 <h2>Git issues<a class="headerlink" href="#git-issues" title="Link to this heading">¶</a></h2>
 <p>Since an upgrade of OSX, my <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> was not OK any more (and the ssh -X too … stupid system). A effective solution for Git was :

@@ -1,5 +1,16 @@
 # GDL on OSX
 # INSTALLING GDL ON OSX
+## IMPORTANT! at least on Sequoia (+ AppleSilicon chips?) , the following seems necessary before any attempt of installing GDL:
+* This worked for M2 Ultra, 15.6.1, Homebrew, Way 1. Before any of the build_gdl.sh commands
+( transmitted by [@barney-9000](https://github.com/Barney-9000) in [#2084](https://github.com/gnudatalanguage/gdl/issues/2084)):
+`export SDKROOT=$(xcrun --show-sdk-path)`
+
+* This may also be necessary -- removal and reinstall of CLT before the above export command:
+
+`sudo rm -rf /Library/Developer/CommandLineTools`
+`xcode-select --install`
+
+Good luck!
 
 ***
 `Way 0`
