@@ -74,11 +74,12 @@ This efficient and simple way was successfully tested on : Ubuntu 16.04 LTS, 18.
 
 - GDL now requests CMake 3+. On some old systems (Debian 9, U 14.04) you have access to CMake 3+ with package cmake3 or equivalent module (on HPC with module) 
 
-- The **wxWidgets library is mandatory** (unless you know how to tweak the cmake). **X11** will be supported in parallel if option `-DX11=O`N is set when calling `cmake`. GDL starts with the X11 interface (for plots, not widgets!) when called as "`gdl -X`".
+- The **wxWidgets library is mandatory**. **X11** will be supported in parallel if option `-DX11=ON` is set when calling `cmake`. GDL starts with the X11 interface (for plots, not widgets!) when called as "`gdl -X`".
  
-- When compiling the first time, you may be blocked because one package is missing. After installing it, it is **mandatory** to clean the cache before running again cmake (`rm -f CMakeCache.txt`)
+- When compiling the first time, you may be blocked because one package is missing. All the GDL dependencies are described in the README, so you can find them and how to install them. CMake will tell what package(s) are missing but not the particular name by which they are distributed by your system. 
 
-- Compilation. Once all the packages are around, it is quite fast on multi-cores :)
+- **VERY IMPORTANT** After each installation of a requested package, it is **mandatory** to clean the cache before running again cmake (`rm -f CMakeCache.txt; cmake ...`)
+
 
 ```
 git clone --recursive https://github.com/gnudatalanguage/gdl
@@ -89,4 +90,9 @@ cmake ..
 make -j N  (N depending the number of cores you have)
 make test
 ```
-(on my old laptop with N=4, less than 5 minutes)
+(on my old laptop with N=4, less than 5 minutes).
+
+```
+sudo make install #for a global install 
+```
+
