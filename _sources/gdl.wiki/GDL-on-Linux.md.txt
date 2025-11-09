@@ -78,8 +78,6 @@ This efficient and simple way was successfully tested on : Ubuntu 16.04 LTS, 18.
  
 - When compiling the first time, you may be blocked because one package is missing. All the GDL dependencies are described in the README, so you can find them and how to install them. CMake will tell what package(s) are missing but not the particular name by which they are distributed by your system. 
 
-- **VERY IMPORTANT** After each installation of a requested package, it is **mandatory** to clean the cache before running again cmake (`rm -f CMakeCache.txt; cmake ...`)
-
 
 ```
 git clone --recursive https://github.com/gnudatalanguage/gdl
@@ -90,7 +88,7 @@ cmake ..
 make -j N  (N depending the number of cores you have)
 make test
 ```
-(on my old laptop with N=4, less than 5 minutes).
+- **VERY IMPORTANT** After each installation of a requested package that was not found by `cmake`, it is **mandatory** to clean the cache before running again cmake. This is done with the `--fresh` option: `cmake --fresh ...`
 
 ```
 sudo make install #for a global install 
