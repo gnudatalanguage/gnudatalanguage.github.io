@@ -3,6 +3,8 @@
 
 - GDL now uses by default the wxWidgets engine for all graphics, plot windows and widgets. You can optionally use the X11 driver (for PLOTS only), first by enabling X11 during the compilation (`cmake ... -DX11=ON ...`)  then by calling GDL with the `-X` flag or setting the env. var `GDL_DISABLE_WX_PLOTS`. X11 is not available under Windows.
 
+- Some installations of GraphicsMagick seem to lack the jpeg renderer (?). Use ImageMagick instead.
+
 There are still issues with the wxWidgets engine under Linux, that you may encounter:
   - wxWidgets (using GTK) do not function well with fvwm2 (window positioning mainly). However see [here.](https://github.com/gnudatalanguage/gdl/issues/1759#issuecomment-1971806239)
   - `DEVICE,SET_GRAPHICS_FUNCTION=x` may not work correctly due to the absence of those basic graphic functions in the PANGO library, and in consequence in the in wxWidgets3.x. Some utilities (Graffer, Look) use this command to draw crosshairs on plots, and this PANGO 'feature' may prevent crosshair lines to be properly erased, making a mess of the plot.

@@ -51,6 +51,7 @@
 <ul class="simple">
 <li><p>Did you use the<code class="docutils literal notranslate"> <span class="pre">--recursive</span></code> while cloning gdl ? Otherwise it will not compile.</p></li>
 <li><p>GDL now uses by default the wxWidgets engine for all graphics, plot windows and widgets. You can optionally use the X11 driver (for PLOTS only), first by enabling X11 during the compilation (<code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">...</span> <span class="pre">-DX11=ON</span> <span class="pre">...</span></code>)  then by calling GDL with the <code class="docutils literal notranslate"><span class="pre">-X</span></code> flag or setting the env. var <code class="docutils literal notranslate"><span class="pre">GDL_DISABLE_WX_PLOTS</span></code>. X11 is not available under Windows.</p></li>
+<li><p>Some installations of GraphicsMagick seem to lack the jpeg renderer (?). Use ImageMagick instead.</p></li>
 </ul>
 <p>There are still issues with the wxWidgets engine under Linux, that you may encounter:</p>
 <ul class="simple">
