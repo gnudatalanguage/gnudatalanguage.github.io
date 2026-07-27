@@ -1,0 +1,10 @@
+# GDL and DLM (digitally loadable modules)
+GDL now supports loading DLM shared libraries at runtime (see IDL documentation for details).
+DLMs are often used by large packages (data reduction for satellites etc) to add efficient (because compiled!) capabilities to IDL (and now, GDL).
+Such DLMs use a well-defined set of C functions to share code and data with IDL (and now, GDL). These libraries should work without any recompilation with GDL. Only loadable files that call undocumented functions will error, possibly hang, GDL. This is generally ---but not always--- the case for the numerous DLM files coming with an installation of IDL. The idl_cdf.so DLM is special as it is in the IDL "closed" distribution but actually developed by NASA. CDF commands should now work with GDL, and the DLM is publicly available [see here](https://spdf.gsfc.nasa.gov/pub/software/cdf/dist/latest_idl/)
+
+The rules to find the DLM files are described in the documentation but essentially, either the .dlm and associated .so files are in teh environment variable `GDL_DLM_PATH`, or some loader procedure calls `DLM_REGISTER`. Once the DLM is loaded (HELP, /DLM) all the command inside are available to GDL.
+
+If the loading fails some reason (try `DLM_REGISTER,"fullpath_to_the_dlm_file",/VERBOSE` to get a better error), it may be because the `.so` file does not know where to look for the external library '`libidl.so`' which does not of course exist for GDL. Instead, it is GDL itself that plays the role of this library. A symlink properly named for your OS is available in the `installation_directory/bin` so it should suffice to add `installation_directory/bin` to `LD_LIBRARY_PATH` to make it work.
+
+**All errors and crashes while using a DLM provided by an open-source provider should be reported to us, thanks in advance.**

@@ -13,8 +13,8 @@
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Third party librairies" href="Third-party-librairies.html" />
-    <link rel="prev" title="Packaged versions" href="Packaged-versions.html" /> 
+    <link rel="next" title="GDL in a Docker container" href="GDL-in-a-Docker-container.html" />
+    <link rel="prev" title="Foreword" href="Foreword.html" /> 
   </head><body>
   <div id="wrap">
     <div id="header">
@@ -43,24 +43,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="tested-systems-linux-bsd-osx-mswin">
-<h1>Tested systems (Linux, BSD, OSX, MSwin)<a class="headerlink" href="#tested-systems-linux-bsd-osx-mswin" title="Link to this heading">¶</a></h1>
-<p>This page lists whether we succeed to compile GDL 1.0.0 using the script <code class="docutils literal notranslate"><span class="pre">build_gdl.sh</span></code> or using usual <code class="docutils literal notranslate"><span class="pre">cmake</span></code> invocation (this invocation allows to use more options and de-activate missing options). Please note <code class="docutils literal notranslate"><span class="pre">build_gdl.sh</span> <span class="pre">prep</span></code> can be used to prepare a faster configuration then compilation after …</p>
-<p>|OS|script|hand|comments|
-|—-|—-|——|——————–|
-|u1404|no|yes|
-|u1604|no|yes|
-|u1804|yes||
-|u2004|yes||
-|u2104|yes||
-|debian 9 64b|yes||
-|debian 10 64b|yes||
-|debian 11 32b|yes||
-|Fedora 28|yes||
-|opensuse Leap 15.3|no|yes| missing eccodes|
-|MSwin 10|yes|| very long process|
-|OSX 11 (Big Sur)|yes|| long preparation due to Brewe|
-|OSX 10.4.6 |(yes)|yes| if and only if Xcode is updated … |</p>
+  <section id="gdl-and-dlm-digitally-loadable-modules">
+<h1>GDL and DLM (digitally loadable modules)<a class="headerlink" href="#gdl-and-dlm-digitally-loadable-modules" title="Link to this heading">¶</a></h1>
+<p>GDL now supports loading DLM shared libraries at runtime (see IDL documentation for details).
+DLMs are often used by large packages (data reduction for satellites etc) to add efficient (because compiled!) capabilities to IDL (and now, GDL).
+Such DLMs use a well-defined set of C functions to share code and data with IDL (and now, GDL). These libraries should work without any recompilation with GDL. Only loadable files that call undocumented functions will error, possibly hang, GDL. This is generally —but not always— the case for the numerous DLM files coming with an installation of IDL. The idl_cdf.so DLM is special as it is in the IDL “closed” distribution but actually developed by NASA. CDF commands should now work with GDL, and the DLM is publicly available <a class="reference external" href="https://spdf.gsfc.nasa.gov/pub/software/cdf/dist/latest_idl/">see here</a></p>
+<p>The rules to find the DLM files are described in the documentation but essentially, either the .dlm and associated .so files are in teh environment variable <code class="docutils literal notranslate"><span class="pre">GDL_DLM_PATH</span></code>, or some loader procedure calls <code class="docutils literal notranslate"><span class="pre">DLM_REGISTER</span></code>. Once the DLM is loaded (HELP, /DLM) all the command inside are available to GDL.</p>
+<p>If the loading fails some reason (try <code class="docutils literal notranslate"><span class="pre">DLM_REGISTER,&quot;fullpath_to_the_dlm_file&quot;,/VERBOSE</span></code> to get a better error), it may be because the <code class="docutils literal notranslate"><span class="pre">.so</span></code> file does not know where to look for the external library ‘<code class="docutils literal notranslate"><span class="pre">libidl.so</span></code>’ which does not of course exist for GDL. Instead, it is GDL itself that plays the role of this library. A symlink properly named for your OS is available in the <code class="docutils literal notranslate"><span class="pre">installation_directory/bin</span></code> so it should suffice to add <code class="docutils literal notranslate"><span class="pre">installation_directory/bin</span></code> to <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> to make it work.</p>
+<p><strong>All errors and crashes while using a DLM provided by an open-source provider should be reported to us, thanks in advance.</strong></p>
 </section>
 
 
@@ -82,7 +72,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Cloning-gnudatalanguage-gdl.html#id1">Cloning gnudatalanguage/gdl</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Command-Line-edition-in-GDL.html">Command Line edition in GDL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Foreword.html">Foreword</a></li>
-<li class="toctree-l2"><a class="reference internal" href="GDL-and-DLM-%28digitally-loadable-modules%29.html">GDL and DLM (digitally loadable modules)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GDL and DLM (digitally loadable modules)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="GDL-in-a-Docker-container.html">GDL in a Docker container</a></li>
 <li class="toctree-l2"><a class="reference internal" href="GDL-on-BSD.html">GDL on BSD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="GDL-on-Linux.html">GDL on Linux</a></li>
@@ -94,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Known-issues.html">Known issues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Local-test-coverage-of-GDL-using-gcov-lcov.html">Local test coverage of GDL using gcov lcov</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Packaged-versions.html">Packaged versions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Tested systems (Linux, BSD, OSX, MSwin)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tested-systems-%28Linux%2C-BSD%2C-OSX%2C-MSwin%29.html">Tested systems (Linux, BSD, OSX, MSwin)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Third-party-librairies.html">Third party librairies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ToDo-list.html">ToDo list</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gdl-command-switches.html">gdl command switches</a></li>
