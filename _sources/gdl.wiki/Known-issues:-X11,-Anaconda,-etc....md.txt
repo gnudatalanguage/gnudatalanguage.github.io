@@ -1,7 +1,9 @@
-# Known issues
+# Known issues: X11, Anaconda, etc
 - Did you use the` --recursive` while cloning gdl ? Otherwise it will not compile.
 
-- GDL now uses by default the wxWidgets engine for all graphics, plot windows and widgets. You can optionally use the X11 driver (for PLOTS only), first by enabling X11 during the compilation (`cmake ... -DX11=ON ...`)  then by calling GDL with the `-X` flag or setting the env. var `GDL_DISABLE_WX_PLOTS`. X11 is not available under Windows.
+- GDL and X11: GDL now uses by default the wxWidgets engine for all graphics, plot windows and widgets. If GDL is compiled with the cmake option `-DX11=ON` (not the default), your GDL will also be able to use X11 plot windows, **IF** GDL is called with option -X ( `gdl -X`). In this case, provided an X11 server is running on the machine hosting GDL (e.g., the host is a Mac and XQartz is installed and started), the X11 plot windows will be able to be plotted remotely on any machine logged in via `ssh -X`.
+Note that X11 is not available under Windows.
+Due to the obsolescence of X11, we recommend to use remote desktop applications instead of X11.
 
 - Some installations of GraphicsMagick seem to lack the jpeg renderer (?). Use ImageMagick instead.
 
