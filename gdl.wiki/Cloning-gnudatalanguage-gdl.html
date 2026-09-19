@@ -45,19 +45,19 @@
             
   <section id="cloning-gnudatalanguage-gdl">
 <h1>Cloning gnudatalanguage gdl<a class="headerlink" href="#cloning-gnudatalanguage-gdl" title="Link to this heading">¶</a></h1>
-</section>
-<section id="id1">
-<h1>Cloning gnudatalanguage/gdl<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>Do not use the
 <img alt="image" src="https://user-images.githubusercontent.com/33936193/213888017-95aab9bf-a0f6-4425-a9f8-b961c79224bc.png" />
 button of the GitHub repo, your cloning will be incomplete.</p>
 <p>Starting from <a class="reference external" href="https://github.com/gnudatalanguage/gdl/pull/1484">#1484</a> gdl uses <strong>git submodules</strong>.</p>
-<p>To clone gdl, type: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">--recursive</span> <span class="pre">https://github.com/gnudatalanguage/gdl.git</span> </code></p>
+<p>To clone gdl, type: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">--recursive</span> <span class="pre">https://github.com/gnudatalanguage/gdl.git</span> </code>
+It will created a directory <code class="docutils literal notranslate"><span class="pre">gdl</span></code></p>
 <p>To update an already existing (cloned) gdl repo, do:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">gdl</span></code>  (or the path where gdl was cloned)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">update</span> <span class="pre">--init</span></code></p></li>
 <li><p>or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--recurse-submodules</span></code></p></li>
 </ul>
+<p>Then to compile gdl, see now https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux#Compilation</p>
 </section>
 
 
@@ -76,7 +76,6 @@ button of the GitHub repo, your cloning will be incomplete.</p>
 <li class="toctree-l2"><a class="reference internal" href="Benchmarking-GDL.html">Benchmarking GDL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="C----Compilers.html">C Compilers</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Cloning gnudatalanguage gdl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Cloning gnudatalanguage/gdl</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Command-Line-edition-in-GDL.html">Command Line edition in GDL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Foreword.html">Foreword</a></li>
 <li class="toctree-l2"><a class="reference internal" href="GDL-and-DLM-%28digitally-loadable-modules%29.html">GDL and DLM (digitally loadable modules)</a></li>
