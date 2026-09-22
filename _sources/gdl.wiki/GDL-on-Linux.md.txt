@@ -1,8 +1,8 @@
 # GDL on Linux
-
-[Packages](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/##packages)
-[Compilation](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/##Compilation)
-[script build_gdl.sh](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#script)
+Go to :
+[Packages](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#packages),
+[Compilation](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#Compilation),
+[script build_gdl.sh](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#script),
 [cmake](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#cmake)
 
 ## packages:
@@ -78,6 +78,7 @@ This efficient and simple way was successfully tested on : Ubuntu 16.04 LTS, 18.
  
 - When compiling the first time, you may be blocked because one package is missing. All the GDL dependencies are described in the README, so you can find them and how to install them. CMake will tell what package(s) are missing but not the particular name by which they are distributed by your system. 
 
+- The default is to compile GDL in such a way it will be add to the system at the end (need to be _root_) be you can custome it to have a local installation using a CMake flag : -DCMAKE_INSTALL_PREFIX= which can be absolute or relative
 
 ```
 git clone --recursive https://github.com/gnudatalanguage/gdl
@@ -90,6 +91,13 @@ make test
 ```
 - **VERY IMPORTANT** After each installation of a requested package that was not found by `cmake`, it is **mandatory** to clean the cache before running again cmake. This is done with the `--fresh` option: `cmake --fresh ...`
 
+It is totally possible to compile only a subset of GDL, ie : 
+```
+cmake .. -DOPENMP=OFF  -DHDF=OFF -DCMAKE_INSTALL_PREFIX=../install
+```
+
+
+At the end, when compile by default, you can push GDL to the system
 ```
 sudo make install #for a global install 
 ```

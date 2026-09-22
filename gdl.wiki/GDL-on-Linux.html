@@ -45,9 +45,10 @@
             
   <section id="gdl-on-linux">
 <h1>GDL on Linux<a class="headerlink" href="#gdl-on-linux" title="Link to this heading">¶</a></h1>
-<p><a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/##packages">Packages</a>
-<a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/##Compilation">Compilation</a>
-<a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#script">script build_gdl.sh</a>
+<p>Go to :
+<a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#packages">Packages</a>,
+<a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#Compilation">Compilation</a>,
+<a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#script">script build_gdl.sh</a>,
 <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#cmake">cmake</a></p>
 <section id="packages">
 <h2>packages:<a class="headerlink" href="#packages" title="Link to this heading">¶</a></h2>
@@ -132,6 +133,7 @@
 <li><p>GDL now requests CMake 3+. On some old systems (Debian 9, U 14.04) you have access to CMake 3+ with package cmake3 or equivalent module (on HPC with module)</p></li>
 <li><p>The <strong>wxWidgets library is mandatory</strong>. <strong>X11</strong> will be supported in parallel if option <code class="docutils literal notranslate"><span class="pre">-DX11=ON</span></code> is set when calling <code class="docutils literal notranslate"><span class="pre">cmake</span></code>. GDL starts with the X11 interface (for plots, not widgets!) when called as “<code class="docutils literal notranslate"><span class="pre">gdl</span> <span class="pre">-X</span></code>”.</p></li>
 <li><p>When compiling the first time, you may be blocked because one package is missing. All the GDL dependencies are described in the README, so you can find them and how to install them. CMake will tell what package(s) are missing but not the particular name by which they are distributed by your system.</p></li>
+<li><p>The default is to compile GDL in such a way it will be add to the system at the end (need to be <em>root</em>) be you can custome it to have a local installation using a CMake flag : -DCMAKE_INSTALL_PREFIX= which can be absolute or relative</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recursive</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gnudatalanguage</span><span class="o">/</span><span class="n">gdl</span>
 <span class="n">cd</span> <span class="n">gdl</span>
@@ -145,6 +147,11 @@
 <ul class="simple">
 <li><p><strong>VERY IMPORTANT</strong> After each installation of a requested package that was not found by <code class="docutils literal notranslate"><span class="pre">cmake</span></code>, it is <strong>mandatory</strong> to clean the cache before running again cmake. This is done with the <code class="docutils literal notranslate"><span class="pre">--fresh</span></code> option: <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--fresh</span> <span class="pre">...</span></code></p></li>
 </ul>
+<p>It is totally possible to compile only a subset of GDL, ie :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">..</span> <span class="o">-</span><span class="n">DOPENMP</span><span class="o">=</span><span class="n">OFF</span>  <span class="o">-</span><span class="n">DHDF</span><span class="o">=</span><span class="n">OFF</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=../</span><span class="n">install</span>
+</pre></div>
+</div>
+<p>At the end, when compile by default, you can push GDL to the system</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span> <span class="c1">#for a global install </span>
 </pre></div>
 </div>

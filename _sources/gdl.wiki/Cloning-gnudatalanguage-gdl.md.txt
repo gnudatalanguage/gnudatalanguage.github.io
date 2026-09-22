@@ -1,17 +1,17 @@
 # Cloning gnudatalanguage gdl
+Do not use the <sup><img src="https://user-images.githubusercontent.com/33936193/213888017-95aab9bf-a0f6-4425-a9f8-b961c79224bc.png" align="middle"></sup> button of the GitHub repo, your cloning will be incomplete.
 
-Do not use the 
-![image](https://user-images.githubusercontent.com/33936193/213888017-95aab9bf-a0f6-4425-a9f8-b961c79224bc.png)
-button of the GitHub repo, your cloning will be incomplete.
+Since [#1484](https://github.com/gnudatalanguage/gdl/pull/1484) gdl uses **git submodules**.
 
-Starting from [#1484](https://github.com/gnudatalanguage/gdl/pull/1484) gdl uses **git submodules**.
-
-To clone gdl, type: `git clone --recursive https://github.com/gnudatalanguage/gdl.git `
-It will created a directory `gdl`
+To clone gdl, type :
+```
+git clone --recursive https://github.com/gnudatalanguage/gdl.git 
+```
+It will created a directory `gdl`.
 
 To update an already existing (cloned) gdl repo, do:
 * `cd gdl`  (or the path where gdl was cloned)
 * `git submodule update --init` 
 * or `git pull --recurse-submodules` 
 
-Then to compile gdl, see now https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux#Compilation
+Then to compile gdl, see now https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux#Compilation.
