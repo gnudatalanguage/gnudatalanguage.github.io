@@ -5,7 +5,7 @@ Go to :
 [script build_gdl.sh](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#script),
 [cmake](https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#cmake)
 
-## packages:
+### Use Packaged GDL:
 
 Check the packaged version before installing! Most packages are always well beyond the current evoloution of the code. It may be better to use the releases on Github (including the weekly ones), even if it means installing by hand.
 
@@ -28,16 +28,14 @@ Check the packaged version before installing! Most packages are always well beyo
 At the moment, you can
 -  download the unstable weekly build binaries from https://github.com/gnudatalanguage/gdl/releases/tag/weekly-release, also see [#957](https://github.com/gnudatalanguage/gdl/pull/957)
 
-## Compilation:
-*or* you can compile the code.
-
+### Or compile the code.
 Two mains paths : 
 
-### script:
-`Way 1` using the script `scripts/build_gdl.sh` (assuming you can be _sudo_)
+ ## use the script `scripts/build_gdl.sh` 
 
- -  Assuming you already have a [c++ compiler](https://github.com/gnudatalanguage/gdl/wiki/C----Compilers) , Cmake (version > 3.2), curl or wget, git
- -  Download the gdl code, and run gdl/scripts/build_gdl.sh several times:
+ -  You need a [c++ compiler](https://github.com/gnudatalanguage/gdl/wiki/C----Compilers) , Cmake (version > 3.2), curl or wget, git
+ -  You can _sudo_
+ -  Download the gdl code (or [clone GDL](https://github.com/gnudatalanguage/gdl/wiki/Cloning-gnudatalanguage-gdl)) , and run `gdl/scripts/build_gdl.sh` several times:
  - `build_gdl.sh prep` will install the required libraries. (If you are not _sudoer_ you will get a list of libs. your admin. will installed for you.)
  - `build_gdl.sh configure` will run Cmake to prepare the Make file
  - `build_gdl.sh build` will build gdl in `build`.
@@ -64,41 +62,32 @@ then you should be able to start GDL by : `./install/bin/gdl`
 
 This efficient and simple way was successfully tested on : Ubuntu 16.04 LTS, 18.04 LTS (may have a glitch due to Magicks libs), 20.04 LTS, 22.04 LTS; Debian 9, 10, Sid; Fedora 28
 
-### cmake:
-
-*or, traditional way*,`Way 2` using CMake :
-
-- GDL is written in such a way you can compile it fully in user space, without being _root_, as long as all the mandatory packages (-dev/-devel) are around. If some packages are missing or outdated (e.g. Eigen3), yes, you can use a version in your user space, giving the path as a parameter to CMake (e.g. -DEIGEN3DIR=/path/to/local/Eigen3) 
-
-- GDL can be compiled with : GCC (GNU C Compiler), Clang (LLVM), icc (Intel C compiler)
-
-- GDL now requests CMake 3+. On some old systems (Debian 9, U 14.04) you have access to CMake 3+ with package cmake3 or equivalent module (on HPC with module) 
-
-- The **wxWidgets library is mandatory**. **X11** will be supported in parallel if option `-DX11=ON` is set when calling `cmake`. GDL starts with the X11 interface (for plots, not widgets!) when called as "`gdl -X`".
- 
-- When compiling the first time, you may be blocked because one package is missing. All the GDL dependencies are described in the README, so you can find them and how to install them. CMake will tell what package(s) are missing but not the particular name by which they are distributed by your system. 
-
-- The default is to compile GDL in such a way it will be add to the system at the end (need to be _root_) be you can custome it to have a local installation using a CMake flag : -DCMAKE_INSTALL_PREFIX= which can be absolute or relative
+## use 'cmake'
+- The default installs GDL at the end in a _root_ directory. For a custom or _user_ installation use the CMake flag `-DCMAKE_INSTALL_PREFIX=`, which can be a absolute or relative path.
 
 ```
 git clone --recursive https://github.com/gnudatalanguage/gdl
 cd gdl
 mkdir build
 cd build
-cmake ..
-make -j N  (N depending the number of cores you have)
+cmake --fresh ..
+make -j N    # N depending the number of cores you have; getconf _NPROCESSORS_ONLN
 make test
+make install
 ```
-- **VERY IMPORTANT** After each installation of a requested package that was not found by `cmake`, it is **mandatory** to clean the cache before running again cmake. This is done with the `--fresh` option: `cmake --fresh ...`
+- The `--fresh` option is only important after each installation of a requested package that was not found by `cmake`, it is **mandatory** to clean the cache before running again cmake.
 
-It is totally possible to compile only a subset of GDL, ie : 
+It is totally possible to compile only a subset of GDL, i.e. : 
 ```
 cmake .. -DOPENMP=OFF  -DHDF=OFF -DCMAKE_INSTALL_PREFIX=../install
 ```
 
-
-At the end, when compile by default, you can push GDL to the system
+Finally, you can run GDL with
 ```
-sudo make install #for a global install 
+gdl
+```
+or for user installs
+```
+gdl/install/bin/gdl
 ```
 

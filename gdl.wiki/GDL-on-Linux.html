@@ -50,8 +50,8 @@
 <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#Compilation">Compilation</a>,
 <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#script">script build_gdl.sh</a>,
 <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/GDL-on-Linux/#cmake">cmake</a></p>
-<section id="packages">
-<h2>packages:<a class="headerlink" href="#packages" title="Link to this heading">¶</a></h2>
+<section id="use-packaged-gdl">
+<h2>Use Packaged GDL:<a class="headerlink" href="#use-packaged-gdl" title="Link to this heading">¶</a></h2>
 <p>Check the packaged version before installing! Most packages are always well beyond the current evoloution of the code. It may be better to use the releases on Github (including the weekly ones), even if it means installing by hand.</p>
 <ul class="simple">
 <li><p>Fedora: https://src.fedoraproject.org/rpms/gdl <strong>actively maintained.</strong></p></li>
@@ -90,16 +90,16 @@
 <li><p>download the unstable weekly build binaries from https://github.com/gnudatalanguage/gdl/releases/tag/weekly-release, also see <a class="reference external" href="https://github.com/gnudatalanguage/gdl/pull/957">#957</a></p></li>
 </ul>
 </section>
-<section id="compilation">
-<h2>Compilation:<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h2>
-<p><em>or</em> you can compile the code.</p>
+<section id="or-compile-the-code">
+<h2>Or compile the code.<a class="headerlink" href="#or-compile-the-code" title="Link to this heading">¶</a></h2>
 <p>Two mains paths :</p>
-<section id="script">
-<h3>script:<a class="headerlink" href="#script" title="Link to this heading">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Way</span> <span class="pre">1</span></code> using the script <code class="docutils literal notranslate"><span class="pre">scripts/build_gdl.sh</span></code> (assuming you can be <em>sudo</em>)</p>
+</section>
+<section id="use-the-script-scripts-build-gdl-sh">
+<h2>use the script <code class="docutils literal notranslate"><span class="pre">scripts/build_gdl.sh</span></code><a class="headerlink" href="#use-the-script-scripts-build-gdl-sh" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Assuming you already have a <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/C----Compilers">c++ compiler</a> , Cmake (version &gt; 3.2), curl or wget, git</p></li>
-<li><p>Download the gdl code, and run gdl/scripts/build_gdl.sh several times:</p></li>
+<li><p>You need a <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/C----Compilers">c++ compiler</a> , Cmake (version &gt; 3.2), curl or wget, git</p></li>
+<li><p>You can <em>sudo</em></p></li>
+<li><p>Download the gdl code (or <a class="reference external" href="https://github.com/gnudatalanguage/gdl/wiki/Cloning-gnudatalanguage-gdl">clone GDL</a>) , and run <code class="docutils literal notranslate"><span class="pre">gdl/scripts/build_gdl.sh</span></code> several times:</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">build_gdl.sh</span> <span class="pre">prep</span></code> will install the required libraries. (If you are not <em>sudoer</em> you will get a list of libs. your admin. will installed for you.)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">build_gdl.sh</span> <span class="pre">configure</span></code> will run Cmake to prepare the Make file</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">build_gdl.sh</span> <span class="pre">build</span></code> will build gdl in <code class="docutils literal notranslate"><span class="pre">build</span></code>.</p></li>
@@ -124,38 +124,36 @@
 <p>then you should be able to start GDL by : <code class="docutils literal notranslate"><span class="pre">./install/bin/gdl</span></code></p>
 <p>This efficient and simple way was successfully tested on : Ubuntu 16.04 LTS, 18.04 LTS (may have a glitch due to Magicks libs), 20.04 LTS, 22.04 LTS; Debian 9, 10, Sid; Fedora 28</p>
 </section>
-<section id="cmake">
-<h3>cmake:<a class="headerlink" href="#cmake" title="Link to this heading">¶</a></h3>
-<p><em>or, traditional way</em>,<code class="docutils literal notranslate"><span class="pre">Way</span> <span class="pre">2</span></code> using CMake :</p>
+<section id="use-cmake">
+<h2>use ‘cmake’<a class="headerlink" href="#use-cmake" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>GDL is written in such a way you can compile it fully in user space, without being <em>root</em>, as long as all the mandatory packages (-dev/-devel) are around. If some packages are missing or outdated (e.g. Eigen3), yes, you can use a version in your user space, giving the path as a parameter to CMake (e.g. -DEIGEN3DIR=/path/to/local/Eigen3)</p></li>
-<li><p>GDL can be compiled with : GCC (GNU C Compiler), Clang (LLVM), icc (Intel C compiler)</p></li>
-<li><p>GDL now requests CMake 3+. On some old systems (Debian 9, U 14.04) you have access to CMake 3+ with package cmake3 or equivalent module (on HPC with module)</p></li>
-<li><p>The <strong>wxWidgets library is mandatory</strong>. <strong>X11</strong> will be supported in parallel if option <code class="docutils literal notranslate"><span class="pre">-DX11=ON</span></code> is set when calling <code class="docutils literal notranslate"><span class="pre">cmake</span></code>. GDL starts with the X11 interface (for plots, not widgets!) when called as “<code class="docutils literal notranslate"><span class="pre">gdl</span> <span class="pre">-X</span></code>”.</p></li>
-<li><p>When compiling the first time, you may be blocked because one package is missing. All the GDL dependencies are described in the README, so you can find them and how to install them. CMake will tell what package(s) are missing but not the particular name by which they are distributed by your system.</p></li>
-<li><p>The default is to compile GDL in such a way it will be add to the system at the end (need to be <em>root</em>) be you can custome it to have a local installation using a CMake flag : -DCMAKE_INSTALL_PREFIX= which can be absolute or relative</p></li>
+<li><p>The default installs GDL at the end in a <em>root</em> directory. For a custom or <em>user</em> installation use the CMake flag <code class="docutils literal notranslate"><span class="pre">-DCMAKE_INSTALL_PREFIX=</span></code>, which can be a absolute or relative path.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recursive</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gnudatalanguage</span><span class="o">/</span><span class="n">gdl</span>
 <span class="n">cd</span> <span class="n">gdl</span>
 <span class="n">mkdir</span> <span class="n">build</span>
 <span class="n">cd</span> <span class="n">build</span>
-<span class="n">cmake</span> <span class="o">..</span>
-<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="n">N</span>  <span class="p">(</span><span class="n">N</span> <span class="n">depending</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">cores</span> <span class="n">you</span> <span class="n">have</span><span class="p">)</span>
+<span class="n">cmake</span> <span class="o">--</span><span class="n">fresh</span> <span class="o">..</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="n">N</span>    <span class="c1"># N depending the number of cores you have; getconf _NPROCESSORS_ONLN</span>
 <span class="n">make</span> <span class="n">test</span>
+<span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><strong>VERY IMPORTANT</strong> After each installation of a requested package that was not found by <code class="docutils literal notranslate"><span class="pre">cmake</span></code>, it is <strong>mandatory</strong> to clean the cache before running again cmake. This is done with the <code class="docutils literal notranslate"><span class="pre">--fresh</span></code> option: <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--fresh</span> <span class="pre">...</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--fresh</span></code> option is only important after each installation of a requested package that was not found by <code class="docutils literal notranslate"><span class="pre">cmake</span></code>, it is <strong>mandatory</strong> to clean the cache before running again cmake.</p></li>
 </ul>
-<p>It is totally possible to compile only a subset of GDL, ie :</p>
+<p>It is totally possible to compile only a subset of GDL, i.e. :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">..</span> <span class="o">-</span><span class="n">DOPENMP</span><span class="o">=</span><span class="n">OFF</span>  <span class="o">-</span><span class="n">DHDF</span><span class="o">=</span><span class="n">OFF</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=../</span><span class="n">install</span>
 </pre></div>
 </div>
-<p>At the end, when compile by default, you can push GDL to the system</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span> <span class="c1">#for a global install </span>
+<p>Finally, you can run GDL with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdl</span>
 </pre></div>
 </div>
-</section>
+<p>or for user installs</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdl</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">gdl</span>
+</pre></div>
+</div>
 </section>
 </section>
 
