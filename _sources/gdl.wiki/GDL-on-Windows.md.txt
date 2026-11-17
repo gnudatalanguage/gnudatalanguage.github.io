@@ -5,57 +5,103 @@
 
 It will install GDL on your machine automatically. For 64 bit builds, you can also choose whether to install ```GDL Workbench```, an Eclipse-based IDE for GDL (for more information, visit https://github.com/gnudatalanguage/gdlde). 
 
-Do not panic, if the weekly relase has no windows installer, you can still get one using the compilation method below.
+Do not panic, if the weekly release has no windows installer, you can still get one using the compilation method below.
 
 Currently, there are three different types of builds:
-- mini: only includes mandatory libraries to run a very minimal and barely useable GDL.
+- mini: only includes mandatory libraries to run a very minimal and barely usable GDL.
 - full: includes all optional libraries except MPI. This is the one you should use.
 - full-msmpi: includes all optional libraries + MPI. This requires Microsoft MPI pre-installed (https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi). This version of GDL is slightly slow at startup due to the initialization of MPI.
 
 ## Automatic CI builds
 
-In addition to the weekly builds, automatic CI builds of GDL from the master branch of GitHub repository are also available (both 64-bit and 32-bit builds, both Debug and Release configurations) on the Github Actions page, at https://github.com/gnudatalanguage/gdl/actions.
+Automatic builds of the `master` branch are available on the [GitHub Actions](https://github.com/gnudatalanguage/gdl/actions) page (64-bit and 32-bit, Debug and Release).
 
-## Compilation
+## Compilation (build locally)
 
-To compile GDL locally, follow the below steps:
-1. Download and install [MSYS2](https://www.msys2.org/).  When complete, run "MSYS MinGW 64-bit" from Start menu.
+0. Choose your MSYS2 environment
+
+   GDL is built with [MSYS2](https://www.msys2.org/). MSYS2 provides several environments; each one has its own compiler and its own libraries (in its own folder), so **always do every step in the same environment**.
+
+   - **MSYS2 UCRT64** (`Platform=ucrt-x86_64`): builds GDL for Windows x64, with gcc and the Universal CRT. **Recommended** (MSYS2's default, all packages available).
+   - **MSYS2 CLANGARM64** (`Platform=clang-aarch64`): builds a native GDL for Windows ARM64 (Snapdragon PCs...), with clang. No MPI, no NSIS installer.
+   - **MSYS2 MINGW64** (`Platform=x86_64`): builds GDL for Windows x64, with gcc and msvcrt. Used by the CI. Some optional packages are no longer provided (wxWidgets, GraphicsMagick, eccodes, shapelib).
+   - **MSYS2 MINGW32** (`Platform=i686`): builds GDL for Windows x86 (32-bit), with gcc. Same missing packages as MINGW64.
+
+   `Platform` is also the prefix of the MSYS2 package names (`mingw-w64-${Platform}-...`).
+
+   > **Windows on ARM:** the x64 builds (MINGW64, UCRT64) also work on an ARM64 PC, through Windows' built-in x64 emulation, but they run slower. Use CLANGARM64 for a native ARM64 GDL.
+
+1. Download and install [MSYS2](https://www.msys2.org/). Then run the terminal of your environment from the Start menu (for example **MSYS2 UCRT64** or **MSYS2 CLANGARM64**), and update MSYS2 (run it again if it asks you to close the terminal):
+
+   ```
+   $ pacman -Syu
+   ```
+
 2. Set environment variables.
-```shell
-$ export ROOT_DIR=/path/to/store/everything
-$ export Platform=x86_64 # or 'i686' for 32 bit build
-$ export DEPS=standard # or 'debug' or 'headless'
-$ export Configuration=Release # or 'Debug'. linking of GDL in 'Debug' is *extremely slow* 
-```
-2. Install packages to compile GDL.
-```shell
-$ pacman -S mingw-w64-${Platform}-toolchain mingw-w64-${Platform}-cmake mingw-w64-${Platform}-nsis zip unzip tar zstd git base-devel
-```
-3. cd to `ROOT_DIR` and clone GDL.
-```shell
-$ cd $ROOT_DIR
-$ git clone --recursive https://github.com/gnudatalanguage/gdl
-```
-2. Build GDL:
-```shell
-$ gdl/scripts/build_gdl.sh prep # download external libararies
-$ gdl/scripts/build_gdl.sh configure # run CMake to prepare the make file
-$ gdl/scripts/build_gdl.sh build # build GDL
-$ gdl/scripts/build_gdl.sh install # install GDL
-$ ls install # compiled results will be here
-```
-3. (Optional) run tests:
-```shell
-$ gdl/scripts/build_gdl.sh check
-```
-4. **IMPORTANT:**  package GDL into zip and NSIS installer:
-```shell
-$ export GDLDE_VERSION=v1.0.0 # replace this with any newer release
-$ gdl/scripts/build_gdl.sh pack
-$ ls package # packages will be here
-$ gdl/scripts/build_gdl.sh prep_deploy
-(then use the installer freshly created in gdl/)
-```
+
+   ```
+   $ export ROOT_DIR=/path/to/store/everything
+   $ export Platform=ucrt-x86_64   # x86_64, ucrt-x86_64, clang-aarch64 or i686 (see the list above)
+   $ export DEPS=standard          # or 'debug' or 'headless'
+   $ export Configuration=Release  # or 'Debug'. linking of GDL in 'Debug' is *extremely slow*
+   ```
+
+   `Platform` is needed by the `pacman` command of step 3. If the packages of step 3 are already installed, it is optional: `build_gdl.sh` then deduces it from the terminal you opened (`$MSYSTEM`).
+
+3. Install packages needed to compile GDL.
+
+   ```
+   $ pacman -S --needed mingw-w64-${Platform}-toolchain mingw-w64-${Platform}-cmake mingw-w64-${Platform}-nsis zip unzip tar zstd git base-devel
+   ```
+
+   **CLANGARM64:** `nsis` does not exist for ARM64, so use this command instead (it also installs the `gcc`/`g++` wrappers for clang, needed to build bsd-xdr):
+
+   ```
+   $ pacman -S --needed mingw-w64-clang-aarch64-toolchain mingw-w64-clang-aarch64-cmake mingw-w64-clang-aarch64-gcc-compat zip unzip tar zstd git base-devel
+   ```
+
+   Check that the compiler and CMake come from your environment (`/ucrt64/bin`, `/clangarm64/bin`, ...):
+
+   ```
+   $ which gcc cmake
+   ```
+
+4. Change directory to `ROOT_DIR` and clone GDL.
+
+   ```
+   $ cd $ROOT_DIR
+   $ git clone --recursive https://github.com/gnudatalanguage/gdl
+   ```
+
+5. Build GDL.
+
+   ```
+   $ gdl/scripts/build_gdl.sh prep        # download libraries
+   $ gdl/scripts/build_gdl.sh configure   # run CMake to prepare the make file
+   $ gdl/scripts/build_gdl.sh build       # build GDL
+   $ gdl/scripts/build_gdl.sh install     # install GDL
+   $ ls install                           # compiled results will be here
+   ```
+
+6. (Optional) Run the tests.
+
+   ```
+   $ gdl/scripts/build_gdl.sh check
+   ```
+
+7. IMPORTANT: package GDL into a zip and an NSIS installer.
+
+   **Not available with CLANGARM64** (NSIS does not exist for ARM64): run `gdl` from the MSYS2 CLANGARM64 terminal instead (`install/bin/gdl`).
+
+   ```
+   $ export GDLDE_VERSION=v1.0.0   # replace this with any newer release
+   $ gdl/scripts/build_gdl.sh pack
+   $ ls package                    # packages will be here
+   $ gdl/scripts/build_gdl.sh prep_deploy
+   ```
+
+   Then use the installer freshly created in `gdl/`.
+
 It is recommended to use `gdl/scripts/build_gdl.sh build` (instead of just "make") anytime you download a new version of GDL sources, as the script adds magic of its own.
 
-**IMPORTANT:** You may be able to call directly `$ gdl` once step 2 is done, but we recommend to build and use the installer just made above (`gdl/scripts/build_gdl.sh pack`) to install the new GDL (more windows-like).
+**IMPORTANT:** You may be able to call directly `$ gdl` once step 5 is done, but we recommend to build and use the installer just made above (`gdl/scripts/build_gdl.sh pack`) to install the new GDL (more windows-like).

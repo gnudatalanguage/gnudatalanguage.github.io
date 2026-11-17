@@ -51,72 +51,94 @@
 <li><p>Found in <a class="reference external" href="https://github.com/gnudatalanguage/gdl/releases/tag/weekly-release">Weekly builds</a> and all our <a class="reference external" href="https://github.com/gnudatalanguage/gdl/releases">Releases</a></p></li>
 </ul>
 <p>It will install GDL on your machine automatically. For 64 bit builds, you can also choose whether to install <code class="docutils literal notranslate"><span class="pre">GDL</span> <span class="pre">Workbench</span></code>, an Eclipse-based IDE for GDL (for more information, visit https://github.com/gnudatalanguage/gdlde).</p>
-<p>Do not panic, if the weekly relase has no windows installer, you can still get one using the compilation method below.</p>
+<p>Do not panic, if the weekly release has no windows installer, you can still get one using the compilation method below.</p>
 <p>Currently, there are three different types of builds:</p>
 <ul class="simple">
-<li><p>mini: only includes mandatory libraries to run a very minimal and barely useable GDL.</p></li>
+<li><p>mini: only includes mandatory libraries to run a very minimal and barely usable GDL.</p></li>
 <li><p>full: includes all optional libraries except MPI. This is the one you should use.</p></li>
 <li><p>full-msmpi: includes all optional libraries + MPI. This requires Microsoft MPI pre-installed (https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi). This version of GDL is slightly slow at startup due to the initialization of MPI.</p></li>
 </ul>
 </section>
 <section id="automatic-ci-builds">
 <h2>Automatic CI builds<a class="headerlink" href="#automatic-ci-builds" title="Link to this heading">¶</a></h2>
-<p>In addition to the weekly builds, automatic CI builds of GDL from the master branch of GitHub repository are also available (both 64-bit and 32-bit builds, both Debug and Release configurations) on the Github Actions page, at https://github.com/gnudatalanguage/gdl/actions.</p>
+<p>Automatic builds of the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch are available on the <a class="reference external" href="https://github.com/gnudatalanguage/gdl/actions">GitHub Actions</a> page (64-bit and 32-bit, Debug and Release).</p>
 </section>
-<section id="compilation">
-<h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h2>
-<p>To compile GDL locally, follow the below steps:</p>
-<ol class="simple">
-<li><p>Download and install <a class="reference external" href="https://www.msys2.org/">MSYS2</a>.  When complete, run “MSYS MinGW 64-bit” from Start menu.</p></li>
-<li><p>Set environment variables.</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">ROOT_DIR</span><span class="o">=</span>/path/to/store/everything
-$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">Platform</span><span class="o">=</span>x86_64<span class="w"> </span><span class="c1"># or &#39;i686&#39; for 32 bit build</span>
-$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DEPS</span><span class="o">=</span>standard<span class="w"> </span><span class="c1"># or &#39;debug&#39; or &#39;headless&#39;</span>
-$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">Configuration</span><span class="o">=</span>Release<span class="w"> </span><span class="c1"># or &#39;Debug&#39;. linking of GDL in &#39;Debug&#39; is *extremely slow* </span>
+<section id="compilation-build-locally">
+<h2>Compilation (build locally)<a class="headerlink" href="#compilation-build-locally" title="Link to this heading">¶</a></h2>
+<ol>
+<li><p>Choose your MSYS2 environment</p>
+<p>GDL is built with <a class="reference external" href="https://www.msys2.org/">MSYS2</a>. MSYS2 provides several environments; each one has its own compiler and its own libraries (in its own folder), so <strong>always do every step in the same environment</strong>.</p>
+<ul class="simple">
+<li><p><strong>MSYS2 UCRT64</strong> (<code class="docutils literal notranslate"><span class="pre">Platform=ucrt-x86_64</span></code>): builds GDL for Windows x64, with gcc and the Universal CRT. <strong>Recommended</strong> (MSYS2’s default, all packages available).</p></li>
+<li><p><strong>MSYS2 CLANGARM64</strong> (<code class="docutils literal notranslate"><span class="pre">Platform=clang-aarch64</span></code>): builds a native GDL for Windows ARM64 (Snapdragon PCs…), with clang. No MPI, no NSIS installer.</p></li>
+<li><p><strong>MSYS2 MINGW64</strong> (<code class="docutils literal notranslate"><span class="pre">Platform=x86_64</span></code>): builds GDL for Windows x64, with gcc and msvcrt. Used by the CI. Some optional packages are no longer provided (wxWidgets, GraphicsMagick, eccodes, shapelib).</p></li>
+<li><p><strong>MSYS2 MINGW32</strong> (<code class="docutils literal notranslate"><span class="pre">Platform=i686</span></code>): builds GDL for Windows x86 (32-bit), with gcc. Same missing packages as MINGW64.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Platform</span></code> is also the prefix of the MSYS2 package names (<code class="docutils literal notranslate"><span class="pre">mingw-w64-${Platform}-...</span></code>).</p>
+<blockquote>
+<div><p><strong>Windows on ARM:</strong> the x64 builds (MINGW64, UCRT64) also work on an ARM64 PC, through Windows’ built-in x64 emulation, but they run slower. Use CLANGARM64 for a native ARM64 GDL.</p>
+</div></blockquote>
+</li>
+<li><p>Download and install <a class="reference external" href="https://www.msys2.org/">MSYS2</a>. Then run the terminal of your environment from the Start menu (for example <strong>MSYS2 UCRT64</strong> or <strong>MSYS2 CLANGARM64</strong>), and update MSYS2 (run it again if it asks you to close the terminal):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pacman -Syu
 </pre></div>
 </div>
-<ol class="simple">
-<li><p>Install packages to compile GDL.</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>mingw-w64-<span class="si">${</span><span class="nv">Platform</span><span class="si">}</span>-toolchain<span class="w"> </span>mingw-w64-<span class="si">${</span><span class="nv">Platform</span><span class="si">}</span>-cmake<span class="w"> </span>mingw-w64-<span class="si">${</span><span class="nv">Platform</span><span class="si">}</span>-nsis<span class="w"> </span>zip<span class="w"> </span>unzip<span class="w"> </span>tar<span class="w"> </span>zstd<span class="w"> </span>git<span class="w"> </span>base-devel
+</li>
+<li><p>Set environment variables.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export ROOT_DIR=/path/to/store/everything
+$ export Platform=ucrt-x86_64   # x86_64, ucrt-x86_64, clang-aarch64 or i686 (see the list above)
+$ export DEPS=standard          # or &#39;debug&#39; or &#39;headless&#39;
+$ export Configuration=Release  # or &#39;Debug&#39;. linking of GDL in &#39;Debug&#39; is *extremely slow*
 </pre></div>
 </div>
-<ol class="simple">
-<li><p>cd to <code class="docutils literal notranslate"><span class="pre">ROOT_DIR</span></code> and clone GDL.</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="nv">$ROOT_DIR</span>
-$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/gnudatalanguage/gdl
+<p><code class="docutils literal notranslate"><span class="pre">Platform</span></code> is needed by the <code class="docutils literal notranslate"><span class="pre">pacman</span></code> command of step 3. If the packages of step 3 are already installed, it is optional: <code class="docutils literal notranslate"><span class="pre">build_gdl.sh</span></code> then deduces it from the terminal you opened (<code class="docutils literal notranslate"><span class="pre">$MSYSTEM</span></code>).</p>
+</li>
+<li><p>Install packages needed to compile GDL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pacman -S --needed mingw-w64-${Platform}-toolchain mingw-w64-${Platform}-cmake mingw-w64-${Platform}-nsis zip unzip tar zstd git base-devel
 </pre></div>
 </div>
-<ol class="simple">
-<li><p>Build GDL:</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>prep<span class="w"> </span><span class="c1"># download external libararies</span>
-$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>configure<span class="w"> </span><span class="c1"># run CMake to prepare the make file</span>
-$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>build<span class="w"> </span><span class="c1"># build GDL</span>
-$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>install<span class="w"> </span><span class="c1"># install GDL</span>
-$<span class="w"> </span>ls<span class="w"> </span>install<span class="w"> </span><span class="c1"># compiled results will be here</span>
+<p><strong>CLANGARM64:</strong> <code class="docutils literal notranslate"><span class="pre">nsis</span></code> does not exist for ARM64, so use this command instead (it also installs the <code class="docutils literal notranslate"><span class="pre">gcc</span></code>/<code class="docutils literal notranslate"><span class="pre">g++</span></code> wrappers for clang, needed to build bsd-xdr):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pacman -S --needed mingw-w64-clang-aarch64-toolchain mingw-w64-clang-aarch64-cmake mingw-w64-clang-aarch64-gcc-compat zip unzip tar zstd git base-devel
 </pre></div>
 </div>
-<ol class="simple">
-<li><p>(Optional) run tests:</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>check
+<p>Check that the compiler and CMake come from your environment (<code class="docutils literal notranslate"><span class="pre">/ucrt64/bin</span></code>, <code class="docutils literal notranslate"><span class="pre">/clangarm64/bin</span></code>, …):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ which gcc cmake
 </pre></div>
 </div>
-<ol class="simple">
-<li><p><strong>IMPORTANT:</strong>  package GDL into zip and NSIS installer:</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">GDLDE_VERSION</span><span class="o">=</span>v1.0.0<span class="w"> </span><span class="c1"># replace this with any newer release</span>
-$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>pack
-$<span class="w"> </span>ls<span class="w"> </span>package<span class="w"> </span><span class="c1"># packages will be here</span>
-$<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>prep_deploy
-<span class="o">(</span><span class="k">then</span><span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>installer<span class="w"> </span>freshly<span class="w"> </span>created<span class="w"> </span><span class="k">in</span><span class="w"> </span>gdl/<span class="o">)</span>
+</li>
+<li><p>Change directory to <code class="docutils literal notranslate"><span class="pre">ROOT_DIR</span></code> and clone GDL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd $ROOT_DIR
+$ git clone --recursive https://github.com/gnudatalanguage/gdl
 </pre></div>
 </div>
+</li>
+<li><p>Build GDL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ gdl/scripts/build_gdl.sh prep        # download libraries
+$ gdl/scripts/build_gdl.sh configure   # run CMake to prepare the make file
+$ gdl/scripts/build_gdl.sh build       # build GDL
+$ gdl/scripts/build_gdl.sh install     # install GDL
+$ ls install                           # compiled results will be here
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Run the tests.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ gdl/scripts/build_gdl.sh check
+</pre></div>
+</div>
+</li>
+<li><p>IMPORTANT: package GDL into a zip and an NSIS installer.</p>
+<p><strong>Not available with CLANGARM64</strong> (NSIS does not exist for ARM64): run <code class="docutils literal notranslate"><span class="pre">gdl</span></code> from the MSYS2 CLANGARM64 terminal instead (<code class="docutils literal notranslate"><span class="pre">install/bin/gdl</span></code>).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export GDLDE_VERSION=v1.0.0   # replace this with any newer release
+$ gdl/scripts/build_gdl.sh pack
+$ ls package                    # packages will be here
+$ gdl/scripts/build_gdl.sh prep_deploy
+</pre></div>
+</div>
+<p>Then use the installer freshly created in <code class="docutils literal notranslate"><span class="pre">gdl/</span></code>.</p>
+</li>
+</ol>
 <p>It is recommended to use <code class="docutils literal notranslate"><span class="pre">gdl/scripts/build_gdl.sh</span> <span class="pre">build</span></code> (instead of just “make”) anytime you download a new version of GDL sources, as the script adds magic of its own.</p>
-<p><strong>IMPORTANT:</strong> You may be able to call directly <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">gdl</span></code> once step 2 is done, but we recommend to build and use the installer just made above (<code class="docutils literal notranslate"><span class="pre">gdl/scripts/build_gdl.sh</span> <span class="pre">pack</span></code>) to install the new GDL (more windows-like).</p>
+<p><strong>IMPORTANT:</strong> You may be able to call directly <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">gdl</span></code> once step 5 is done, but we recommend to build and use the installer just made above (<code class="docutils literal notranslate"><span class="pre">gdl/scripts/build_gdl.sh</span> <span class="pre">pack</span></code>) to install the new GDL (more windows-like).</p>
 </section>
 </section>
 
@@ -146,6 +168,7 @@ $<span class="w"> </span>gdl/scripts/build_gdl.sh<span class="w"> </span>prep_de
 <li class="toctree-l2"><a class="reference internal" href="GDL-on-OSX.html#installing-gdl-on-osx">INSTALLING GDL ON OSX</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">GDL on Windows</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Home.html">Home</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#documentation">Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="How-to-get-a-given-Pull-Request-%28PR%29.html">How to get a given Pull Request (PR)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Known-issues%3A-X11%2C-Anaconda%2C-etc....html">Known issues: X11, Anaconda, etc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Local-test-coverage-of-GDL-using-gcov-lcov.html">Local test coverage of GDL using gcov lcov</a></li>

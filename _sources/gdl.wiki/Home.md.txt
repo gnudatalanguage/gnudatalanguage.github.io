@@ -1,3 +1,69 @@
 # Home
-Welcome to the gdl wiki!
-Choose the wiki topic on the right.
+# Documentation
+
+## 1. [Benchmarking-GDL](Benchmarking-GDL)
+
+
+## 2. [C----Compilers](C----Compilers)
+
+
+## 3. [Cloning-gnudatalanguage-gdl](Cloning-gnudatalanguage-gdl)
+
+
+## 4. [Command-Line-edition-in-GDL](Command-Line-edition-in-GDL)
+
+
+## 5. [Foreword](Foreword)
+
+
+## 6. [GDL-and-DLM-(digitally-loadable-modules)](GDL-and-DLM-(digitally-loadable-modules))
+
+
+## 7. [GDL-in-a-Docker-container](GDL-in-a-Docker-container)
+
+
+## 8. [GDL-on-BSD](GDL-on-BSD)
+
+- [ports](GDL-on-BSD#ports)
+
+## 9. [GDL-on-Linux](GDL-on-Linux)
+
+- [Use Packaged GDL:](GDL-on-Linux#use-packaged-gdl)
+- [Or compile the code.](GDL-on-Linux#or-compile-the-code)
+- [use 'cmake'](GDL-on-Linux#use-cmake)
+
+## 10. [GDL-on-OSX](GDL-on-OSX)
+
+- [IMPORTANT! at least on Sequoia (+ AppleSilicon chips?) , the following seems necessary before any attempt of installing GDL:](GDL-on-OSX#important-at-least-on-sequoia-applesilicon-chips-the-following-seems-necessary-before-any-attempt-of-installing-gdl)
+- [Git issues](GDL-on-OSX#git-issues)
+- [Installers](GDL-on-OSX#installers)
+
+## 11. [GDL-on-Windows](GDL-on-Windows)
+
+- [Download the ```GDL Installer```](GDL-on-Windows#download-the-gdl-installer)
+- [Automatic CI builds](GDL-on-Windows#automatic-ci-builds)
+- [Compilation (build locally)](GDL-on-Windows#compilation-build-locally)
+
+## 12. [How-to-get-a-given-Pull-Request-(PR)](How-to-get-a-given-Pull-Request-(PR))
+
+
+## 13. [Known-issues:-X11,-Anaconda,-etc...](Known-issues:-X11,-Anaconda,-etc...)
+
+
+## 14. [Local-test-coverage-of-GDL-using-gcov-lcov](Local-test-coverage-of-GDL-using-gcov-lcov)
+
+
+## 15. [Packaged-versions](Packaged-versions)
+
+
+## 16. [Tested-systems-(Linux,-BSD,-OSX,-MSwin)](Tested-systems-(Linux,-BSD,-OSX,-MSwin))
+
+
+## 17. [Third-party-librairies](Third-party-librairies)
+
+
+## 18. [ToDo-list](ToDo-list)
+
+
+## 19. [gdl-command-switches](gdl-command-switches)
+
